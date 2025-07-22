@@ -8,8 +8,6 @@ Registers a new user in the system. Accepts user details, validates them, hashes
 
 ### Request Body
 
-Send a JSON object with the following structure:
-
 ```json
 {
   "fullname": {
@@ -29,15 +27,11 @@ Send a JSON object with the following structure:
 ### Responses
 
 - **201 Created**
-
   - Registration successful.
   - Returns: `{ "token": "<jwt_token>", "user": { ...userData } }`
-
 - **400 Bad Request**
-
   - Validation failed or missing required fields.
   - Returns: `{ "errors": [ ... ] }`
-
 - **500 Internal Server Error**
   - Unexpected server error.
 
@@ -65,8 +59,6 @@ Authenticates a user with email and password. Returns a JWT token and user data 
 
 ### Request Body
 
-Send a JSON object with the following structure:
-
 ```json
 {
   "email": "john.doe@example.com",
@@ -80,20 +72,14 @@ Send a JSON object with the following structure:
 ### Responses
 
 - **200 OK**
-
   - Login successful.
   - Returns: `{ "token": "<jwt_token>", "user": { ...userData } }`
-
 - **400 Bad Request**
-
   - Validation failed or missing required fields.
   - Returns: `{ "errors": [ ... ] }`
-
 - **401 Unauthorized**
-
   - Invalid email or password.
   - Returns: `{ "message": "Invalid email or password" }`
-
 - **500 Internal Server Error**
   - Unexpected server error.
 
@@ -106,4 +92,61 @@ curl -X POST http://localhost:PORT/users/login \
     "email": "jane.smith@example.com",
     "password": "securepassword"
   }'
+```
+
+---
+
+# User Profile Endpoint Documentation
+
+## GET `/users/profile`
+
+### Description
+
+Returns the authenticated user's profile information. Requires authentication via JWT token (sent as a cookie or Authorization header).
+
+### Authentication
+
+- Requires a valid JWT token in the `Authorization: Bearer <token>` header or as a `token` cookie.
+
+### Responses
+
+- **200 OK**
+  - Returns the user profile as JSON.
+- **401 Unauthorized**
+  - Missing or invalid token.
+
+### Example Request
+
+```bash
+curl -X GET http://localhost:PORT/users/profile \
+  -H "Authorization: Bearer <jwt_token>"
+```
+
+---
+
+# User Logout Endpoint Documentation
+
+## GET `/users/logout`
+
+### Description
+
+Logs out the authenticated user by clearing the authentication cookie and blacklisting the JWT token.
+
+### Authentication
+
+- Requires a valid JWT token in the `Authorization: Bearer <token>` header or as a `token` cookie.
+
+### Responses
+
+- **200 OK**
+  - Logout successful.
+  - Returns: `{ "message": "Logged out successfully" }`
+- **401 Unauthorized**
+  - Missing or invalid token.
+
+### Example Request
+
+```bash
+curl -X GET http://localhost:PORT/users/logout \
+  -H "Authorization: Bearer <jwt_token>"
 ```
