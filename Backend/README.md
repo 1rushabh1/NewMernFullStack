@@ -166,39 +166,67 @@ Registers a new captain (driver) in the system with vehicle details. Accepts cap
 ```json
 {
   "fullname": {
-    "firstname": "John",
-    "lastname": "Doe"
+    "firstname": "John",      // string, required, min 3 chars
+    "lastname": "Doe"         // string, optional, min 3 chars if provided
   },
-  "email": "john.doe@example.com",
-  "password": "yourpassword",
+  "email": "john.doe@example.com", // string, required, must be a valid email
+  "password": "yourpassword",      // string, required, min 6 chars
   "vehicle": {
-    "color": "Red",
-    "plate": "ABC123",
-    "capacity": 4,
-    "vehicleType": "car"
+    "color": "Red",               // string, required, min 3 chars
+    "plate": "ABC123",            // string, required, min 3 chars
+    "capacity": 4,                // integer, required, min 1
+    "vehicleType": "car"          // string, required, one of: "car", "motorcycle", "auto"
   }
 }
 ```
 
-- `fullname.firstname` (string, required, min 3 chars)
-- `fullname.lastname` (string, optional, min 3 chars if provided)
-- `email` (string, required, must be a valid email)
-- `password` (string, required, min 6 chars)
-- `vehicle.color` (string, required, min 3 chars)
-- `vehicle.plate` (string, required, min 3 chars)
-- `vehicle.capacity` (integer, required, min 1)
-- `vehicle.vehicleType` (string, required, one of: `car`, `motorcycle`, `auto`)
+### Successful Response
 
-### Responses
+```json
+{
+  "token": "<jwt_token>", // JWT token for authentication
+  "captain": {
+    "_id": "64f1c2e4b8e4b2a1c2e4b8e4",
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "john.doe@example.com",
+    "vehicle": {
+      "color": "Red",
+      "plate": "ABC123",
+      "capacity": 4,
+      "vehicleType": "car"
+    },
+    // ...other captain fields...
+  }
+}
+```
 
-- **201 Created**
-  - Registration successful.
-  - Returns: `{ ...captainData }`
-- **400 Bad Request**
-  - Validation failed or missing required fields.
-  - Returns: `{ "errors": [ ... ] }`
-- **500 Internal Server Error**
-  - Unexpected server error.
+### Error Responses
+
+**400 Bad Request**
+
+```json
+{
+  "errors": [
+    // Array of validation errors, e.g.:
+    { "msg": "Invalid Email", "param": "email", "location": "body" }
+  ]
+}
+// or
+{
+  "message": "Captain already exists"
+}
+```
+
+**500 Internal Server Error**
+
+```json
+{
+  "message": "Internal server error"
+}
+```
 
 ### Example Request
 
