@@ -20,7 +20,7 @@ const CaptainProtectWrapper = ({
             navigate('/captain-login')
         }
 
-        axios.get(`${import.meta.env.VITE_API_URL}/captains/profile`, {
+        axios.get("/captains/profile", {
             headers: {
                 Authorization: `Bearer ${token}`
             }
