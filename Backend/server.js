@@ -5,7 +5,7 @@ const port = process.env.PORT || 5000;
 const cors = require("cors");
 
 app.use(cors({
-    origin: "*",
+    origin: "https://newmernfullstack-1.onrender.com",
     credentials: true
 }));
 
