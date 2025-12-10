@@ -32,7 +32,7 @@ const UserSignUp = () => {
       password: password
     }
 
-    const response = await axios.post(`${import.meta.env.VITE_API_URL}/users/register`, newUser)
+    const response = await axios.post(`/users/register`, newUser)
 
     if (response.status === 201) {
       const data = response.data
