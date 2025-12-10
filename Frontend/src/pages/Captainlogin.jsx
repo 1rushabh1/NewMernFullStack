@@ -21,7 +21,7 @@ const Captainlogin = () => {
       password
     }
 
-    const response = await axios.post(`${import.meta.env.VITE_API_URL}/captains/login`, captain)
+    const response = await axios.post("/captains/login", captain)
 
     if (response.status === 200) {
       const data = response.data
