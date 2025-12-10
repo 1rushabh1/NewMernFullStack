@@ -45,11 +45,7 @@ const CaptainSignup = () => {
       const data = response.data
       setCaptain(data.captain)
       localStorage.setItem('token', data.token)
-      await axios.get("/captains/captain-home", {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`
-      }
-     });
+      navigate('/captain-home')
     }
 
     setEmail('')
